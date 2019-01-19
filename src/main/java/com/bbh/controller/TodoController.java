@@ -1,12 +1,16 @@
 package com.bbh.controller;
 
-import java.text.ParseException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bbh.model.TodoActivity;
+import com.bbh.model.User;
 import com.bbh.repository.TodoActivityRepo;
+import com.bbh.repository.UserRepo;
 
 @RequestMapping("/")
 @Controller
@@ -24,11 +30,15 @@ public class TodoController {
 	@Autowired
 	private TodoActivityRepo todoRepo;
 	
+	@Autowired
+	private UserRepo userRepo;
+	
 	@GetMapping
-	public ModelAndView todoHome() {
+	public ModelAndView todoHome(HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("todos.jsp");
-		mv.addObject("activities", todoRepo.findAll());
+		User loggedInUser = getLoggedInUser();
+		mv.addObject("activities", todoRepo.findByUser(loggedInUser));
 		return mv;
 	}
 	
@@ -42,7 +52,7 @@ public class TodoController {
 				throw new Exception("Activity should not be empty!");
 			}
 			LocalDateTime datetime = getDateTime(todoDate, todoTime);
-			todoRepo.save(new TodoActivity(datetime,activity));
+			todoRepo.save(new TodoActivity(datetime,activity,getLoggedInUser()));
 		}catch(DateTimeParseException e) {
 			mv.addObject("error", "Error on submission, please check your values!");
 			e.printStackTrace();
@@ -90,6 +100,11 @@ public class TodoController {
 			throw new Exception("Previous date not allowed!");
 		}
 		return dateTime;
+	}
+	
+	public User getLoggedInUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return userRepo.findByUsername(((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getUsername());
 	}
 	
 }

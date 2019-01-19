@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class TodoActivity {
@@ -14,6 +15,9 @@ public class TodoActivity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int todoId;
+	
+	@ManyToOne
+	private User user;
 	private String activity;
 	private boolean done;
 	private LocalDateTime datetime;
@@ -22,9 +26,10 @@ public class TodoActivity {
 		
 	}
 	
-	public TodoActivity(LocalDateTime datetime, String activity) {
+	public TodoActivity(LocalDateTime datetime, String activity, User user) {
 		this.datetime = datetime;
 		this.activity = activity;
+		this.user = user;
 	}
 
 	public int getTodoId() {
@@ -35,6 +40,14 @@ public class TodoActivity {
 		this.todoId = todoId;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String getActivity() {
 		return activity;
 	}
@@ -42,8 +55,6 @@ public class TodoActivity {
 	public void setActivity(String activity) {
 		this.activity = activity;
 	}
-
-	
 
 	public boolean isDone() {
 		return done;
