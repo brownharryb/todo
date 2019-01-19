@@ -15,6 +15,7 @@ public class TodoActivity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int todoId;
 	private String activity;
+	private boolean done;
 	private LocalDateTime datetime;
 	
 	public TodoActivity() {
@@ -40,6 +41,16 @@ public class TodoActivity {
 
 	public void setActivity(String activity) {
 		this.activity = activity;
+	}
+
+	
+
+	public boolean isDone() {
+		return done;
+	}
+
+	public void setDone(boolean isDone) {
+		this.done = isDone;
 	}
 
 	public LocalDateTime getDatetime() {

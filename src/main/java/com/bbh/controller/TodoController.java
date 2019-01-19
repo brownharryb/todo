@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,10 +57,25 @@ public class TodoController {
 		return mv;
 	}
 	
-	@RequestMapping("/deletetodo/:todoId")
+	@RequestMapping("/deletetodo")
 	public ModelAndView todoHome(@RequestParam("activity_id") String activityId) {
 		ModelAndView mv = new ModelAndView();
-		todoRepo.deleteById(Long.parseLong(activityId));
+		todoRepo.deleteById (Integer.parseInt(activityId));
+		mv.addObject("activities", todoRepo.findAll());
+		mv.setViewName("todos.jsp");		
+		return mv;
+	}
+	
+	@RequestMapping("/marktododone")
+	public ModelAndView markDone(@RequestParam("activity_id") String activityId,
+									@RequestParam("done") boolean done) {
+		ModelAndView mv = new ModelAndView();
+		Optional<TodoActivity> todoActivity = todoRepo.findById(Integer.parseInt(activityId));
+		if(todoActivity.isPresent()) {
+			TodoActivity activity = todoActivity.get();
+			activity.setDone(done);
+			todoRepo.save(activity);
+		}
 		mv.addObject("activities", todoRepo.findAll());
 		mv.setViewName("todos.jsp");		
 		return mv;

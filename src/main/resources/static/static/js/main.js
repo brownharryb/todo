@@ -1,6 +1,31 @@
 $(document).ready(function(){
 		enableParticleJs();
+		loginSignFormSwith();
+		enableTodoCheck();
 });
+
+
+var enableTodoCheck = function(){
+	$(".activity-checkbox").on("change", function(e){
+		var activityid = $(e.target).data("activityid");
+		var done = $(e.target).prop("checked");
+		console.log(done);
+		$.ajax({
+			url:"/marktododone",
+			data:{"activity_id":activityid,
+					"done":done},
+			success:function(r){
+			},
+			error:function(err){
+			}
+		});
+	});
+}
+var loginSignFormSwith = function(){
+	$('.message a').click(function(){
+		   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+		});
+}
 
 var enableParticleJs = function(){
 	particlesJS.load('particles-js',"/static/js/particlesjs.json");
@@ -9,12 +34,33 @@ var enableParticleJs = function(){
 
 var deleteActivity = function(todoId){
 	$.ajax({
-		url:"/deletetodo/"+todoId,
+		url:"/deletetodo",
+		data:{"activity_id":todoId},
 		success:function(r){
 			window.location.href = "/";
-		}.
+		},
 		error:function(err){
 			console.log(err);
+		}
+	});
+}
+
+var registerUser = function(){
+	var data = $(".register-form").serializeArray();
+//	console.log(data);
+	
+	$.ajax({
+		url:"/register",
+		data:data,
+		success:function(r){
+			if(r.error != ""){
+				$(".register-form .form-err").html(r.error);
+			}else{
+				alert("User created!!");
+				window.location.href = "/";
+			}
+		},
+		error:function(err){
 		}
 	});
 }

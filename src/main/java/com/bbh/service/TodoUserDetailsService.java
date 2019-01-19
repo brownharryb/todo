@@ -29,8 +29,6 @@ public class TodoUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		addUser("boma", "password", new String[] {"USER"});
-		
 		User user = userRepo.findByUsername(username);
 	    if (user != null) {
 	    	Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
@@ -49,7 +47,7 @@ public class TodoUserDetailsService implements UserDetailsService {
 		for(String s:_roles) {
 			roles.add(new Role(s));
 		}
-		userRepo.save(new User(1,username,new BCryptPasswordEncoder(11).encode(password),roles));
+		userRepo.save(new User(username,new BCryptPasswordEncoder(11).encode(password)));
 	}
 
 }

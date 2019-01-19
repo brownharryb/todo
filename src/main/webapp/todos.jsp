@@ -6,21 +6,51 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Hind:400,500,600&amp;subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" href="/static/css/todomain.css">
 <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
 	<div id="particles-js">
-		<div class="todos-wrapper center">
-			<form method="post" action="">
-				<input type="text" name="activity">
-				<input type="date" name="date">
-				<input type="time" name="time">
+	<main class="app center">
+  <nav class="nav">
+    <a href="/" class="nav__item active">Todo List</a>
+  </nav>
+  <div class="add">
+    <form method="post" action="">
+    			<p class="form-err" style="margin-left:25px;margin-bottom:10px;">${error}</p>
+				<input class="add__input" type="text" name="activity" placeholder="+ Add todo item">
+				<input type="date" class="add__input" name="date">
+				<input type="time" class="add__input" name="time">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<button type="submit">Add Todo</button>
+				<button class="btn btn-success" type="submit" style="width:100%;">Add Todo</button>
 			</form>
+  </div>
+
+  
+  <ul class="list">
+  <c:forEach items="${activities}" var="activity">
+  	<li class="item">
+      <label class="item__checkbox item__checkbox--3">
+      	<input class="activity-checkbox" data-activityid="${activity.todoId}" type="checkbox" <c:if test="${activity.done}">checked</c:if> />
+      		<i class="fas fa-check"></i>
+      </label>
+      	<p class="todo-activity-text">${activity.activity}</p>
+      	<small class="datetime-info">${activity.datetime}</small>
+      <button class="item__delete" onclick="deleteActivity(${activity.todoId})" >
+      	<i class="fas fa-trash-alt">
+      </i></button>
+    </li>			    
+</c:forEach>
+  </ul>
+</main>
+		<div class="todos-wrapper center">
 			${error}
 			<hr>
-			${activity}
+			
+			
 			<c:forEach items="${activities}" var="activity">
 			    <div class="item">
 			    	<form>
@@ -39,7 +69,9 @@
 	</div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/particles.min.js"></script>
+<script type="text/javascript" src="/static/js/todomain.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
 </body>
 </html>
