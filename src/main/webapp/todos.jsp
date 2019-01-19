@@ -37,8 +37,11 @@
       	<input class="activity-checkbox" data-activityid="${activity.todoId}" type="checkbox" <c:if test="${activity.done}">checked</c:if> />
       		<i class="fas fa-check"></i>
       </label>
+      <div>
       	<p class="todo-activity-text">${activity.activity}</p>
       	<small class="datetime-info">${activity.datetime}</small>
+      </div>
+      	
       <button class="item__delete" onclick="deleteActivity(${activity.todoId})" >
       	<i class="fas fa-trash-alt">
       </i></button>

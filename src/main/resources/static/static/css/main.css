@@ -61,19 +61,16 @@ html,body{
 }
 
 .item .datetime-info{
-	position: absolute;
-	bottom: -7px;
-	left: 72px;
 	font-size: 11px;
 	color:#b2c9b8;
 }
 
 .item .todo-activity-text{
-	max-width: 200px;
+	max-width: 80%;
 	word-wrap: break-word;
 	font-size: 14px;
 	line-height: 17px;
-	margin-bottom: 6px;
+	margin-bottom: 0px;
 }
 
 

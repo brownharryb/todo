@@ -46,9 +46,7 @@ var deleteActivity = function(todoId){
 }
 
 var registerUser = function(){
-	var data = $(".register-form").serializeArray();
-//	console.log(data);
-	
+	var data = $(".register-form").serializeArray();	
 	$.ajax({
 		url:"/register",
 		data:data,

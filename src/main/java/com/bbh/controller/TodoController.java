@@ -61,7 +61,7 @@ public class TodoController {
 			e.printStackTrace();
 		}
 		
-		mv.addObject("activities", todoRepo.findAll());
+		mv.addObject("activities", todoRepo.findByUser(getLoggedInUser()));
 		mv.setViewName("todos.jsp");
 		
 		return mv;
@@ -71,7 +71,7 @@ public class TodoController {
 	public ModelAndView todoHome(@RequestParam("activity_id") String activityId) {
 		ModelAndView mv = new ModelAndView();
 		todoRepo.deleteById (Integer.parseInt(activityId));
-		mv.addObject("activities", todoRepo.findAll());
+		mv.addObject("activities", todoRepo.findByUser(getLoggedInUser()));
 		mv.setViewName("todos.jsp");		
 		return mv;
 	}
@@ -86,7 +86,7 @@ public class TodoController {
 			activity.setDone(done);
 			todoRepo.save(activity);
 		}
-		mv.addObject("activities", todoRepo.findAll());
+		mv.addObject("activities", todoRepo.findByUser(getLoggedInUser()));
 		mv.setViewName("todos.jsp");		
 		return mv;
 	}
