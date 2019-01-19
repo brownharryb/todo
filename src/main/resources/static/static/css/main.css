@@ -139,3 +139,27 @@ html,body{
 	color: red;
 }
 
+.logout-btn{
+	position:fixed;
+	z-index:999;
+	height:70px;
+	width:70px;
+	background: #28a745;
+	border-radius:50%;
+	bottom:40px;
+	right:40px;
+	display:flex;
+	align-items:center;
+	justify-content: center;
+	cursor:pointer;
+}
+
+.logout-btn:hover{
+	box-shadow:0px 0px 11px 0px #4ca566;
+}
+
+.logout-btn i{
+	color:#fff;
+	font-size:32px;
+}
+
