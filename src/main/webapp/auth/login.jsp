@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Login | Todo App</title>
 <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
