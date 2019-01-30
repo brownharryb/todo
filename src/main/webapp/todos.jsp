@@ -34,7 +34,7 @@
   <c:forEach items="${activities}" var="activity">
   	<li class="item">
       <label class="item__checkbox item__checkbox--3">
-      	<input class="activity-checkbox" data-activityid="${activity.todoId}" type="checkbox" <c:if test="${activity.done}">checked</c:if> />
+      	<input class="activity-checkbox <c:if test="${activity.done}">item__checkbox__done</c:if>"  data-activityid="${activity.todoId}" type="checkbox" <c:if test="${activity.done}">checked</c:if> />
       		<i class="fas fa-check"></i>
       </label>
       <div>
@@ -51,9 +51,7 @@
 </main>
 		<div class="todos-wrapper center">
 			${error}
-			<hr>
-			
-			
+			<hr>			
 			<c:forEach items="${activities}" var="activity">
 			    <div class="item">
 			    	<form>

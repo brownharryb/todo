@@ -203,7 +203,11 @@ body {
   display: none;
 }
 .item__checkbox input:checked + .fa-check {
-  transform: scale(1);
+  /*transform: scale(1);*/
+}
+
+.item__checkbox__done + .fa-check{
+	transform: scale(1);
 }
 .item__checkbox--1 {
   color: #12ebb2;

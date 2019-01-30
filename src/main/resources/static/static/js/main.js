@@ -9,18 +9,22 @@ var enableTodoCheck = function(){
 	$(".activity-checkbox").on("change", function(e){
 		var activityid = $(e.target).data("activityid");
 		var done = $(e.target).prop("checked");
-		console.log(done);
 		$.ajax({
 			url:"/marktododone",
 			data:{"activity_id":activityid,
 					"done":done},
 			success:function(r){
+				if(r !== null && r.done != null){
+					$(e.target).toggleClass("item__checkbox__done", r.done);
+				}
 			},
 			error:function(err){
+				console.log(err);
 			}
 		});
 	});
 }
+
 var loginSignFormSwith = function(){
 	$('.message a').click(function(){
 		   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
@@ -59,6 +63,7 @@ var registerUser = function(){
 			}
 		},
 		error:function(err){
+			console.log(err);
 		}
 	});
 }

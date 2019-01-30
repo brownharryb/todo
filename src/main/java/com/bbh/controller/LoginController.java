@@ -1,8 +1,8 @@
 package com.bbh.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +20,9 @@ public class LoginController {
 	private UserRepo userRepo;
 	
 	@GetMapping
-	public ModelAndView login(Model model, String error, String logout) {
+	public ModelAndView login(Model model, String error, String logout, Principal principal) {
 		ModelAndView mv = new ModelAndView();
-		if(userIsAuthenticated()) {
+		if(principal != null) {
 			mv.setViewName("redirect:/");
 			return mv;
 		}
@@ -33,11 +33,6 @@ public class LoginController {
 		}
 		mv.setViewName("auth/login.jsp");
 		return mv;
-	}
-	
-	public boolean userIsAuthenticated() {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return !(auth.getPrincipal() instanceof String);
 	}
 
 }
